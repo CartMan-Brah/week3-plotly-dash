@@ -55,13 +55,13 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 dcc.Dropdown(id='site-dropdown',
                                             options=[
                                                  {'label': 'All Sites', 'value': 'ALL'},
-                                                 {'label': 'CCAFS LC-40', 'value': 'site1'},
-                                                 {'label': 'CCAFS SLC-40', 'value': 'site2'},
-                                                 {'label': 'KSC LC-39A', 'value': 'site3'},
-                                                 {'label': 'VAFD SLC-4E', 'value': 'site4'}
+                                                 {'label': 'CCAFS LC-40', 'value': 'CCAFS LC-40'},
+                                                 {'label': 'CCAFS SLC-40', 'value': 'CCAFS SLC-40'},
+                                                 {'label': 'KSC LC-39A', 'value': 'KSC LC-39A'},
+                                                 {'label': 'VAFD SLC-4E', 'value': 'VAFD SLC-4E'}
                                                  ],
                                              value='ALL',
-                                             placeholder="Launch site",
+                                             placeholder="Select a launch site",
                                              searchable=True
                                              ),
                                 html.Br(),
@@ -76,7 +76,7 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 #dcc.RangeSlider(id='payload-slider',...)
                                 dcc.RangeSlider(id='payload-slider',
                                         min=0, max=10000, step=1000,
-                                        marks={0: '0',100: '100'},
+                                        marks={0: '0',1000: '1000',2000: '2000',3000: '3000', 4000: '4000',5000: '5000',6000: '6000',7000: '7000',8000: '8000',9000: '9000',10000: '10000'},
                                         value=[min_payload, max_payload]),
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
@@ -97,11 +97,10 @@ def get_pie_chart(entered_site):
     else:
         spacex_1_df=spacex_df[spacex_df['Launch Site']==entered_site]
         spacex_1_df=spacex_1_df.groupby(['Launch Site','class']).size().reset_index(name='class count') 
-        fig = px.pie(
-            spacex_1_df, 
+        fig = px.pie(spacex_1_df, 
             values='class count',
             names='class',
-            title='Total Successful Launches for Site' + entered_site
+            title=f"Total Successful Launches for {entered_site}"
         )
         return fig
 # TASK 4:
@@ -119,16 +118,12 @@ def scatter(entered_site,payload):
         return fig
     else:
         fig=px.scatter(spacex_1_df[spacex_1_df['Launch Site']==entered_site],x='Payload Mass (kg)',y='class',
-                      color='Booster Version Category',title=f"Success count on Payload mass for site {entered_site}")
+                      color='Booster Version Category',title=f"Success count on Payload mass for {entered_site}")
         return fig
 
 # Run the app
 if __name__ == '__main__':
-    app.run_server(mode='inline', port = 8090, dev_tools_ui=True, debug=True,dev_tools_hot_reload =True, threaded=True)
-
-
-# In[ ]:
-
+    app.run_server(mode='external', port = 8090)
 
 
 
