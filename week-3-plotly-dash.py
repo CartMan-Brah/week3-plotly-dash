@@ -51,13 +51,13 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 # dcc.Dropdown(id='site-dropdown',...)
                                 dcc.Dropdown(id='site-dropdown',
                                             options=[
-                                                 {'label': 'All Sites', 'value': 'ALL'},
+                                                 {'label': 'All Sites', 'value': 'All Sites'},
                                                  {'label': 'CCAFS LC-40', 'value': 'CCAFS LC-40'},
                                                  {'label': 'CCAFS SLC-40', 'value': 'CCAFS SLC-40'},
                                                  {'label': 'KSC LC-39A', 'value': 'KSC LC-39A'},
                                                  {'label': 'VAFD SLC-4E', 'value': 'VAFD SLC-4E'}
                                                  ],
-                                             value='ALL',
+                                             value='All Sites',
                                              placeholder="Select a launch site",
                                              searchable=True
                                              ),
@@ -109,7 +109,7 @@ def get_pie_chart(entered_site):
 def scatter(entered_site,payload):
     spacex_1_df = spacex_df[spacex_df['Payload Mass (kg)'].between(payload[0],payload[1])]
        
-    if entered_site=='ALL':
+    if entered_site=='All Sites':
         fig=px.scatter(spacex_1_df,x='Payload Mass (kg)',y='class',color='Booster Version Category',
                        title='Success count on Payload mass for all sites')
         return fig
@@ -121,6 +121,3 @@ def scatter(entered_site,payload):
 # Run the app
 if __name__ == '__main__':
     app.run_server(mode='external', port = 8090)
-
-
-
