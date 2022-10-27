@@ -1,15 +1,12 @@
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[1]:
 
 
 #install dash
-get_ipython().system('pip install dash==1.19.0  ')
+!pip install dash==1.19.0  
 
-get_ipython().system('pip install jupyter_dash ')
+!pip install jupyter_dash 
 
-get_ipython().system('pip install --upgrade plotly')
+!pip install --upgrade plotly
 
 
 # In[2]:
