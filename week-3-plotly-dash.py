@@ -90,14 +90,14 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 def get_pie_chart(entered_site):
     spacex_1_df=spacex_df
     if entered_site == 'All Sites':
-        fig = px.pie(data, values='class', 
+        fig = px.pie(spacex_1_df, values='class', 
         names='Launch Site', 
         title='Total Successful Launches by Site')
         return fig
     else:
         spacex_1_df=spacex_df[spacex_df['Launch Site']==entered_site]
         spacex_1_df=spacex_1_df.groupby(['Launch Site','class']).size().reset_index(name='class count') 
-        fig - px.pie(
+        fig = px.pie(
             spacex_1_df, 
             values='class count',
             names='class',
